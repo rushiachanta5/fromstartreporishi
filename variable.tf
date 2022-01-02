@@ -22,3 +22,9 @@ variable "storagecontainer" {
 variable "container_access_type" {
     default = "blob"
 }
+variable "statefile" {
+    default = "statefile"
+}
+variable "clusterresourcegroup" {
+    default = "cluster-rg"
+}              
