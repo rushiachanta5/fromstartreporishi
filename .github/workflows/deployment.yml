@@ -26,5 +26,7 @@ jobs:
         
     - name: Terraform Init
       run: |
-        az login -u ajaysingh0910@gmail.com -p Ajay@123
+        az login
         terraform init -input=false
+        terraform plan
+        terraform appply
