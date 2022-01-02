@@ -22,3 +22,6 @@ jobs:
           
       - name: Terraform version
         run: terraform --version
+        
+      - name: Terraform Init
+        run: terraform init
