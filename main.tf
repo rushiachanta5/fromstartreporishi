@@ -1,42 +1,37 @@
 terraform {
+  # 1. Required Version Terraform
+  required_version = ">= 0.13"
+  # 2. Required Terraform Providers  
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "=2.46.0"
+      version = "~> 2.0"
+    }
+    azuread = {
+      source  = "hashicorp/azuread"
+      version = "~> 1.0"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.0"
     }
   }
+
+# Terraform State Storage to Azure Storage Container
+
+  backend "azurerm" {
+    resource_group_name   = "terraform-storage-rg"
+    storage_account_name  = "terraformstateforrishi"
+    container_name        = "tfstatefiles"
+    key                   = "statefile"
+  }  
 }
 
 provider "azurerm" {
-  features {}
-}
+  features {
 
-resource "random_string" "resource_code" {
-  length  = 5
-  special = false
-  upper   = false
-}
-
-resource "azurerm_resource_group" "tfstate" {
-  name     = var.stateresourcegroup
-  location = var.location
-}
-
-resource "azurerm_storage_account" "tfstate" {
-  name                     = var.storageaccount
-  resource_group_name      = azurerm_resource_group.tfstate.name
-  location                 = azurerm_resource_group.tfstate.location
-  account_tier             = var.accounttier
-  account_replication_type = var.accountreplicationtype
-  allow_blob_public_access = true
-
-  tags = {
-    environment = var.environment
   }
 }
 
-resource "azurerm_storage_container" "tfstate" {
-  name                  = var.storagecontainer
-  storage_account_name  = azurerm_storage_account.tfstate.name
-  container_access_type = var.container_access_type
-}
+# 3. Terraform Resource Block: Define a Random Pet Resource
+resource "random_pet" "aksrandom" {}
