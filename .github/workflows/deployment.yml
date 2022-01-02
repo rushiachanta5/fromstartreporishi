@@ -24,4 +24,5 @@ jobs:
         run: terraform --version
         
       - name: Terraform Init
+      - uses: actions/checkout@storageaccnt
         run: terraform init -input=false
