@@ -6,23 +6,23 @@ jobs:
   buildCluster:
     runs-on: ubuntu-latest
     steps:
-      - name: Log in with Azure
-        uses: azure/login@v1
-        with:
+    - uses: actions/checkout@v1
+    - name: Log in with Azure
+      uses: azure/login@v1
+      with:
           creds: '${{ secrets.AZURE_CREDENTIALS }}'
           
-      - name: Terraform Install
-        env:
-            TERRAFORM_VERSION: "0.12.15"
-        run: |
+    - name: Terraform Install
+      env:
+          TERRAFORM_VERSION: "0.12.15"
+      run: |
           tf_version=$TERRAFORM_VERSION
           wget https://releases.hashicorp.com/terraform/"$tf_version"/terraform_"$tf_version"_linux_amd64.zip
           unzip terraform_"$tf_version"_linux_amd64.zip
           sudo mv terraform /usr/local/bin/
           
-      - name: Terraform version
-        run: terraform --version
+    - name: Terraform version
+      run: terraform --version
         
-      - name: Terraform Init
-      - uses: actions/checkout@storageaccnt
-        run: terraform init -input=false
+    - name: Terraform Init
+      run: terraform init -input=false
