@@ -26,5 +26,5 @@ jobs:
         
     - name: Terraform Init
       run: |
-        az login --service-principal -u ef558906-5fcf-4194-805a-ccb72e91a01d -p l~uXPREqBvu_M8et46Vodp~f_5N0tq0AWO --tenant d5ddcb9e-d608-4dfe-ad5d-f425dc316442
+        az login
         terraform init -input=false
