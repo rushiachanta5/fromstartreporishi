@@ -29,4 +29,4 @@ jobs:
         az login
         terraform init -input=false
         terraform plan
-        terraform appply
+        terraform apply
