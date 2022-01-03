@@ -25,8 +25,9 @@ jobs:
       run: terraform --version
         
     - name: Terraform Init
-      run: |
+      run: terrform init
+#      run: |
 #        az login
-        terraform init -input=false
+#        terraform init -input=false
 #        terraform plan
 #        terraform apply -auto-approve -input=false
