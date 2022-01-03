@@ -1,33 +1,26 @@
 on: 
   [workflow_dispatch]
-
-name: azureClusterCreation
+env:
+  REGISTRY_NAME: myregistryrishi
+  CLUSTER_NAME: cluster-rg-dev-cluster
+  CLUSTER_RESOURCE_GROUP: cluster-rg
+  NAMESPACE: default
+  APP_NAME: myApp
+  
 jobs:
-  buildCluster:
+  build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Log in with Azure
-      uses: azure/login@v1
+    - uses: actions/checkout@main
+    
+    # Connect to Azure Container Registry (ACR)
+    - uses: azure/docker-login@v1
       with:
-          creds: '${{ secrets.AZURE_CREDENTIALS }}'
-          
-    - name: Terraform Install
-      env:
-        TERRAFORM_VERSION: "1.1.0"
-      run: |
-          tf_version=$TERRAFORM_VERSION
-          wget https://releases.hashicorp.com/terraform/"$tf_version"/terraform_"$tf_version"_linux_amd64.zip
-          unzip terraform_"$tf_version"_linux_amd64.zip
-          sudo mv terraform /usr/local/bin/
-          
-    - name: Terraform version
-      run: terraform --version
-        
-    - name: Terraform Init
-      run: terraform init
-#      run: |
-#        az login
-#        terraform init -input=false
-#        terraform plan
-#        terraform apply -auto-approve -input=false
+        login-server: ${{ env.REGISTRY_NAME }}.azurecr.io
+        username: ${{ secrets.REGISTRY_USERNAME }} 
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+    
+    # Container build and push to a Azure Container Registry (ACR)
+    - run: |
+        docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
+        docker push ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
