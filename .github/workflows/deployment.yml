@@ -50,7 +50,7 @@ jobs:
         namespace: ${{ env.NAMESPACE }}
         force: true
 
-# - uses: azure/k8s-deploy@v1
+#     - uses: azure/k8s-deploy@v1
 #       with:
 #         manifests: |
 #           manifests/deploymenthub.yml
