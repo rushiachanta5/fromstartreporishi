@@ -5,7 +5,7 @@ env:
   CLUSTER_NAME: cluster-rg-dev-cluster
   CLUSTER_RESOURCE_GROUP: cluster-rg
   NAMESPACE: default
-  APP_NAME: myApp
+  APP_NAME: myapp
   
 jobs:
   build:
