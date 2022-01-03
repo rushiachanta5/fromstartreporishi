@@ -5,7 +5,9 @@ env:
   CLUSTER_NAME: cluster-rg-dev-cluster
   CLUSTER_RESOURCE_GROUP: cluster-rg
   NAMESPACE: default
-  APP_NAME: myapp
+  APP_NAME: hubapp
+  APP_NAME1: nodeapp
+  
   
 jobs:
   build:
@@ -22,5 +24,7 @@ jobs:
     
     # Container build and push to a Azure Container Registry (ACR)
     - run: |
-        docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
+        docker build -f ./Dockerfilehub -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
         docker push ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
+        docker build -f ./Dockerfilenode -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
+        docker push ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME1 }}:${{ github.sha }}
