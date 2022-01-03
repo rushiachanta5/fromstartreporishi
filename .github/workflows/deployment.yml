@@ -3,7 +3,7 @@ on:
 env:
   REGISTRY_NAME: myregistryrishi
   CLUSTER_NAME: cluster-rg-dev-cluster
-  CLUSTER_RESOURCE_GROUP: cluster-rg
+  CLUSTER_RESOURCE_GROUP: cluster-rg-dev
   NAMESPACE: myns
   APP_NAME: hubapp
   APP_NAME1: nodeapp
