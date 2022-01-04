@@ -9,52 +9,49 @@ env:
   APP_NAME1: nodeapp
   SECRET: acrsecret
  
-jobs:
-  terraform_apply:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: acr    
-    steps:
-    - uses: actions/checkout@v1
-    - name: Install Terraform
-      env:
-            TERRAFORM_VERSION: "0.12.15"
-      run: |
-        tf_version=$TERRAFORM_VERSION
-        wget https://releases.hashicorp.com/terraform/"$tf_version"/terraform_"$tf_version"_linux_amd64.zip
-        unzip terraform_"$tf_version"_linux_amd64.zip
-        sudo mv terraform /usr/local/bin/
-        
-    - name: Verify Terraform version
-      run: terraform --version
- 
 # jobs:
-#   acrcreation:
+#   terraform_apply:
 #     runs-on: ubuntu-latest
 #     defaults:
 #       run:
-#         working-directory: acr
+#         working-directory: acr    
 #     steps:
-#     - uses: actions/checkout@main
-#     - name: Log in with Azure
-#       uses: azure/login@v1
-#       with:
-#           creds: '${{ secrets.AZURE_CREDENTIALS }}'
-#     - name: Terraform Install
+#     - uses: actions/checkout@v1
+#     - name: Install Terraform
 #       env:
-#             TERRAFORM_VERSION: "1.0.1"
+#             TERRAFORM_VERSION: "0.12.15"
 #       run: |
 #         tf_version=$TERRAFORM_VERSION
 #         wget https://releases.hashicorp.com/terraform/"$tf_version"/terraform_"$tf_version"_linux_amd64.zip
 #         unzip terraform_"$tf_version"_linux_amd64.zip
 #         sudo mv terraform /usr/local/bin/
         
-#     - name: Terraform version
+#     - name: Verify Terraform version
 #       run: terraform --version
+ 
+jobs:
+  acrcreation:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@main
+    - name: Log in with Azure
+      uses: azure/login@v1
+      with:
+          creds: '${{ secrets.AZURE_CREDENTIALS }}'
+    - name: Terraform Install
+      env:
+            TERRAFORM_VERSION: "1.0.1"
+      run: |
+        tf_version=$TERRAFORM_VERSION
+        wget https://releases.hashicorp.com/terraform/"$tf_version"/terraform_"$tf_version"_linux_amd64.zip
+        unzip terraform_"$tf_version"_linux_amd64.zip
+        sudo mv terraform /usr/local/bin/
         
-#     - name: Terraform Init
-#       run: terraform init
+    - name: Terraform version
+      run: terraform --version
+        
+    - name: Terraform Init
+      run: terraform init
 #      run: |
 #        az login
 #        terraform init -input=false
