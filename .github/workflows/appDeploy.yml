@@ -90,10 +90,10 @@ jobs:
       run: |
         kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.0/deploy/static/provider/cloud/deploy.yaml
        
-    - name: Kubectl Apply
-      uses: okteto/apply@v4.2
-      with:
-        manifest: ingress.yml
+#     - name: Kubectl Apply
+#       uses: okteto/apply@v4.2
+#       with:
+#         manifest: ingress.yml
       
       
       
