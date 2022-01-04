@@ -34,7 +34,8 @@ jobs:
       run: terraform --version
         
     - name: Terraform Init
-      run:
+      run: |
+        az login
         terraform init -input=false
          
 #   build:
