@@ -81,7 +81,24 @@ jobs:
         version: '3.7.0' # default is latest stable
       id: install
    
-#     - name: ingress Installation
+    - name: Kubectl tool installer
+      uses: Azure/setup-kubectl@v1
+      with:
+        version: 1.22
+    
+    - name: ingress Installation
+      run: |
+        kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.0/deploy/static/provider/cloud/deploy.yaml
+    
+    - name: Kubectl Apply
+      uses: okteto/apply@v4.2
+      with:
+        manifest: 
+	        appdeploy/manifests/ingress.yml
+      
+      
+      
+      
 #       run: |
 #           helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 #           helm search repo
