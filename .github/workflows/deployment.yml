@@ -55,7 +55,7 @@ jobs:
         
     - name: Terraform Init
       run: |
-       az login
+#       az login
        terraform init -input=false
 #       terraform plan
 #       terraform apply -auto-approve -input=false
