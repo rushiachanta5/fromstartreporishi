@@ -93,8 +93,7 @@ jobs:
     - name: Kubectl Apply
       uses: okteto/apply@v4.2
       with:
-        manifest: 
-          appdeploy/manifests/ingress.yml
+        manifest: ingress.yml
       
       
       
