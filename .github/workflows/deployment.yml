@@ -54,12 +54,9 @@ jobs:
       run: terraform --version
         
     - name: Terraform Init
-      run: |
-#       az login
-       terraform init -input=false
-       terraform plan
-#       terraform apply -auto-approve -input=false
-          
+      run:
+        terraform init -input=false
+         
 #   build:
 #     runs-on: ubuntu-latest
 #     defaults:
