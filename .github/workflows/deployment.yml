@@ -57,7 +57,7 @@ jobs:
       run: |
 #       az login
        terraform init -input=false
-#       terraform plan
+       terraform plan
 #       terraform apply -auto-approve -input=false
           
 #   build:
