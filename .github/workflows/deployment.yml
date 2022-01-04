@@ -56,9 +56,9 @@ jobs:
       with:
         manifests:
           manifests/sele-hub.yml
-        images: |
+        images:
           ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
-        imagepullsecrets: |
+        imagepullsecrets:
           ${{ env.SECRET }}
         namespace: ${{ env.NAMESPACE }}
 
@@ -66,10 +66,10 @@ jobs:
 
     - uses: azure/k8s-deploy@v1
       with:
-        manifests: |
+        manifests:
           manifests/sele-node.yml
-        images: |
+        images:
           ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME1 }}:${{ github.sha }}
-        imagepullsecrets: |
+        imagepullsecrets:
           ${{ env.SECRET }}
         namespace: ${{ env.NAMESPACE }}
