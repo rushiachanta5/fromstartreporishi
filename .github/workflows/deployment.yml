@@ -50,24 +50,26 @@ jobs:
         namespace: ${{ env.NAMESPACE }}
         force: true
 
+##Selenium Hub Application Deployment####
+
 #     - uses: azure/k8s-deploy@v1
 #       with:
 #         manifests: |
-#           manifests/deploymenthub.yml
-#           manifests/servicehub.yml
+#           manifests/sele-hub.yml
 #         images: |
 #           ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
 #         imagepullsecrets: |
 #           ${{ env.SECRET }}
 #         namespace: ${{ env.NAMESPACE }}
-        
+
+##Selenium Node Application Deployment####
+
 #     - uses: azure/k8s-deploy@v1
 #       with:
 #         manifests: |
-#           manifests/deploymentnode.yml
-#           manifests/servicenode.yml
+#           manifests/sele-node.yml
 #         images: |
 #           ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME1 }}:${{ github.sha }}
 #         imagepullsecrets: |
 #           ${{ env.SECRET }}
-#         namespace: ${{ env.NAMESPACE }}        
+#         namespace: ${{ env.NAMESPACE }}
