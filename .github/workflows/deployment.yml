@@ -78,4 +78,13 @@ jobs:
       with:
         version: '3.7.0' # default is latest stable
       id: install
-
+   
+    - name: ingress Installation
+      run: |
+          helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+          helm search repo
+          helm repo update
+          echo "::set-output name=Noderg::$(az aks show --resource-group meraresourcegroup --name meracluster --query nodeResourceGroup -o tsv)"
+        
+   
+   
