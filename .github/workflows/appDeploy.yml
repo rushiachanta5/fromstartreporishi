@@ -84,7 +84,7 @@ jobs:
     - name: Kubectl tool installer
       uses: Azure/setup-kubectl@v1
       with:
-        version: 1.22
+        version: '1.22.0'
     
 #     - name: ingress Installation
 #       run: |
