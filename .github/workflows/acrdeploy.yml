@@ -10,7 +10,7 @@ env:
   SECRET: acrsecret
 
 jobs:
-  acrcreation:
+  acrCreation:
     runs-on: ubuntu-latest
     defaults:
       run:
