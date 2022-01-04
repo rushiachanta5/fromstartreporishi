@@ -12,6 +12,9 @@ env:
 jobs:
   terraform_apply:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: acr    
     steps:
     - uses: actions/checkout@v1
     - name: Install Terraform
