@@ -74,20 +74,20 @@ jobs:
           ${{ env.SECRET }}
         namespace: ${{ env.NAMESPACE }}
 
-    - uses: azure/setup-helm@v1
-      with:
-        version: '3.7.0' # default is latest stable
-      id: install
+#     - uses: azure/setup-helm@v1
+#       with:
+#         version: '3.7.0' # default is latest stable
+#       id: install
    
-    - name: ingress Installation
-      run: |
-          helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-          helm search repo
-          helm repo update
-          az login
-          az aks get-credentials --resource-group cluster-rg-dev --name cluster-rg-dev-cluster --overwrite-existing
-          echo "::set-output name=Noderg::$(az aks show --resource-group cluster-rg-dev --name cluster-rg-dev-cluster --query nodeResourceGroup -o tsv)"
-          echo "::set-output name=PublicIP::$(az network public-ip create --resource-group Noderg --name PublicIpForIngress --sku Standard --allocation-method static --query publicIp.ipAddress -o tsv)"
+#     - name: ingress Installation
+#       run: |
+#           helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+#           helm search repo
+#           helm repo update
+#           az login
+#           az aks get-credentials --resource-group cluster-rg-dev --name cluster-rg-dev-cluster --overwrite-existing
+#           echo "::set-output name=Noderg::$(az aks show --resource-group cluster-rg-dev --name cluster-rg-dev-cluster --query nodeResourceGroup -o tsv)"
+#           echo "::set-output name=PublicIP::$(az network public-ip create --resource-group Noderg --name PublicIpForIngress --sku Standard --allocation-method static --query publicIp.ipAddress -o tsv)"
                  
    
    
