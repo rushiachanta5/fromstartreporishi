@@ -40,7 +40,7 @@ jobs:
     - name: Log in with Azure
       uses: azure/login@v1
       with:
-          creds: '${{ secrets.AZURE_CREDENTIALS }}'
+          creds: '$h{{ secrets.AZURE_CREDENTIALS }}'
     - name: Terraform Install
       env:
             TERRAFORM_VERSION: "1.0.1"
@@ -54,12 +54,11 @@ jobs:
       run: terraform --version
         
     - name: Terraform Init
-      run: terraform init
-#      run: |
-#        az login
-#        terraform init -input=false
-#        terraform plan
-#        terraform apply -auto-approve -input=false
+      run: |
+       az login
+       terraform init -input=false
+#       terraform plan
+#       terraform apply -auto-approve -input=false
           
 #   build:
 #     runs-on: ubuntu-latest
