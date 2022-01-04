@@ -86,7 +86,7 @@ jobs:
           helm repo update
           az login
           az aks get-credentials --resource-group cluster-rg-dev --name cluster-rg-dev-cluster --overwrite-existing
-          echo "::set-output name=Noderg::$(az aks show --resource-group meraresourcegroup --name meracluster --query nodeResourceGroup -o tsv)"
+          echo "::set-output name=Noderg::$(az aks show --resource-group cluster-rg-dev --name cluster-rg-dev-cluster --query nodeResourceGroup -o tsv)"
                  
    
    
