@@ -89,13 +89,12 @@ jobs:
     - name: ingress controller Installation
       run: |
         kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.0/deploy/static/provider/cloud/deploy.yaml
-        kubectl apply -f appdeploy/manifests/ingress.yml
-
-# - name: Kubectl Apply
-#       uses: okteto/apply@v4.2
-#       with:
-#         manifest: 
-#           appdeploy/manifests/ingress.yml
+       
+    - name: Kubectl Apply
+      uses: okteto/apply@v4.2
+      with:
+        manifest: 
+          appdeploy/manifests/ingress.yml
       
       
       
