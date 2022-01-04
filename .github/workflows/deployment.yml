@@ -41,72 +41,72 @@ jobs:
 #        terraform plan
 #        terraform apply -auto-approve -input=false
           
-  build:
-    runs-on: ubuntu-latest
-    defaults:
-      run: 
-        working-directory: akscluster
-    steps:
-    - uses: actions/checkout@main
+#   build:
+#     runs-on: ubuntu-latest
+#     defaults:
+#       run: 
+#         working-directory: akscluster
+#     steps:
+#     - uses: actions/checkout@main
     
-    # Connect to Azure Container Registry (ACR)
-    - uses: azure/docker-login@v1
-      with:
-        login-server: ${{ env.REGISTRY_NAME }}.azurecr.io
-        username: ${{ secrets.REGISTRY_USERNAME }} 
-        password: ${{ secrets.REGISTRY_PASSWORD }}
+#     # Connect to Azure Container Registry (ACR)
+#     - uses: azure/docker-login@v1
+#       with:
+#         login-server: ${{ env.REGISTRY_NAME }}.azurecr.io
+#         username: ${{ secrets.REGISTRY_USERNAME }} 
+#         password: ${{ secrets.REGISTRY_PASSWORD }}
     
-    # Container build and push to a Azure Container Registry (ACR)
-    - run: |
-        docker build -f Dockerfilehub . -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
-        docker push ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
-        docker build -f Dockerfilenode . -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME1 }}:${{ github.sha }}
-        docker push ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME1 }}:${{ github.sha }}
+#     # Container build and push to a Azure Container Registry (ACR)
+#     - run: |
+#         docker build -f Dockerfilehub . -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
+#         docker push ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
+#         docker build -f Dockerfilenode . -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME1 }}:${{ github.sha }}
+#         docker push ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME1 }}:${{ github.sha }}
 
-#######################connecting to AKS CLuster and CReating Image Pull secret#######################
-    - uses: azure/aks-set-context@v1
-      with:
-        creds: '${{ secrets.AZURE_CREDENTIALS }}'
-        cluster-name: ${{ env.CLUSTER_NAME }}
-        resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
+# #######################connecting to AKS CLuster and CReating Image Pull secret#######################
+#     - uses: azure/aks-set-context@v1
+#       with:
+#         creds: '${{ secrets.AZURE_CREDENTIALS }}'
+#         cluster-name: ${{ env.CLUSTER_NAME }}
+#         resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
     
-    # Create namespace if doesn't exist
-    - run: |
-        kubectl create namespace ${{ env.NAMESPACE }} --dry-run -o json | kubectl apply -f -
+#     # Create namespace if doesn't exist
+#     - run: |
+#         kubectl create namespace ${{ env.NAMESPACE }} --dry-run -o json | kubectl apply -f -
     
-    # Create image pull secret for ACR
-    - uses: azure/k8s-create-secret@v1
-      with:
-        container-registry-url: ${{ env.REGISTRY_NAME }}.azurecr.io
-        container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
-        container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
-        secret-name: ${{ env.SECRET }}
-        namespace: ${{ env.NAMESPACE }}
-        force: true
+#     # Create image pull secret for ACR
+#     - uses: azure/k8s-create-secret@v1
+#       with:
+#         container-registry-url: ${{ env.REGISTRY_NAME }}.azurecr.io
+#         container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
+#         container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+#         secret-name: ${{ env.SECRET }}
+#         namespace: ${{ env.NAMESPACE }}
+#         force: true
 
-##Selenium Hub Application Deployment####
+# ##Selenium Hub Application Deployment####
 
-    - uses: azure/k8s-deploy@v1
-      with:
-        manifests:
-          manifests/sele-hub.yml
-        images:
-          ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
-        imagepullsecrets:
-          ${{ env.SECRET }}
-        namespace: ${{ env.NAMESPACE }}
+#     - uses: azure/k8s-deploy@v1
+#       with:
+#         manifests:
+#           manifests/sele-hub.yml
+#         images:
+#           ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
+#         imagepullsecrets:
+#           ${{ env.SECRET }}
+#         namespace: ${{ env.NAMESPACE }}
 
-##Selenium Node Application Deployment####
+# ##Selenium Node Application Deployment####
 
-    - uses: azure/k8s-deploy@v1
-      with:
-        manifests:
-          manifests/sele-node.yml
-        images:
-          ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME1 }}:${{ github.sha }}
-        imagepullsecrets:
-          ${{ env.SECRET }}
-        namespace: ${{ env.NAMESPACE }}
+#     - uses: azure/k8s-deploy@v1
+#       with:
+#         manifests:
+#           manifests/sele-node.yml
+#         images:
+#           ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME1 }}:${{ github.sha }}
+#         imagepullsecrets:
+#           ${{ env.SECRET }}
+#         namespace: ${{ env.NAMESPACE }}
 
 #     - uses: azure/setup-helm@v1
 #       with:
