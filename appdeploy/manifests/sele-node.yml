@@ -39,7 +39,7 @@ spec:
     spec:
       containers:
         - name: selenium-node-chrome
-          image: selenium/node-chrome:3.141.59-xenon
+          image: myregistryrishi.azurecr.io/nodeapp:{GIT_SHA}
           env:
             - name: JAVA_OPTS
               value: "-Xmx512m -Dselenium.LOGGER.level=WARNING"
