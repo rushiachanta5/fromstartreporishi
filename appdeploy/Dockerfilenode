@@ -1,1 +1,1 @@
-FROM selenium/hub:latest
+selenium/node:3.141.59-xenon
