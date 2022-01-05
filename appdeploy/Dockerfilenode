@@ -1,1 +1,1 @@
-FROM selenium/node:3.141.59-xenon
+FROM selenium/node-chrome:3.141.59-xenon
