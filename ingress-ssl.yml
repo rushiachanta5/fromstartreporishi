@@ -1,0 +1,34 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata: 
+  annotations: 
+    nginx.ingress.kubernetes.io/proxy-body-size: "200m"
+    kubernetes.io/ingress.class: nginx  
+  name: dashboard-ingress
+  namespace: myns
+spec: 
+  rules: 
+    - 
+      http: 
+        paths: 
+          - 
+            backend: 
+              service: 
+                name: hub-svc
+                port: 
+                  number: 80
+            path: /
+            pathType: Prefix	  
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hub-svc
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 80
+    targetPort: 4444 
+  selector:
+    app : selenium-hub			
